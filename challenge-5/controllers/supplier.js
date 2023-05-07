@@ -1,47 +1,31 @@
-const {Product, Product_Component, Component} = require('../db/models');
+const {Supplier} = require('../db/models');
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const products = await Product.findAll({
-                attributes: ['id', 'name', 'quantity'],
-                include: [
-                  {
-                    model: Product_Component,
-                    as: 'product_components',
-                    attributes: ['id'],
-                    include: [
-                      {
-                        model: Component,
-                        as: 'components',
-                        attributes: ['name', 'description']
-                      }
-                    ]
-                  }
-                ]
-            });
-         
+            const suppliers = await Supplier.findAll();
+
             return res.status(200).json({
                 status: true,
                 message: 'success',
-                data: products
+                data: suppliers
             }) 
 
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
         }
     },
 
     show: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {supplier_id} = req.params;
 
-            const product = await Product.findOne({where: {id: product_id}});
+            const supplier = await Supplier.findOne({where: {id: supplier_id}});
 
-            if (!product) {
+            if (!supplier) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find supplier with id ${supplier_id}!`,
                     data: null
                 });
             }
@@ -49,7 +33,7 @@ module.exports = {
             return res.status(200).json({
                 status: true,
                 message: 'success',
-                data: product
+                data: supplier
             });
 
         } catch (error) {
@@ -59,19 +43,19 @@ module.exports = {
 
     store: async (req, res, next) => {
         try {
-            const {name, quantity} = req.body;
+            const {name, address} = req.body;
 
-            const product = await Product.create({
+            const supplier = await Supplier.create({
                 name: name,
-                quantity: quantity
+                address: address
             });
 
-            console.log(product);
+            console.log(supplier);
 
             return res.status(201).json({
                 status: true,
                 message:'success',
-                data: product
+                data: supplier
             })
         } catch (error) {
             next(error);
@@ -80,14 +64,14 @@ module.exports = {
 
     update: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {supplier_id} = req.params;
 
-            const updated = await Product.update(req.body, {where: {id: product_id}});
+            const updated = await Supplier.update(req.body, {where: {id: supplier_id}});
 
             if (updated[0] == 0) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find supplier with id ${supplier_id}!`,
                     data: null
                 });
             }
@@ -104,14 +88,14 @@ module.exports = {
 
     destroy: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {supplier_id} = req.params;
 
-            const deleted = await Product.destroy({where: {id: product_id}});
+            const deleted = await Supplier.destroy({where: {id: supplier_id}});
 
             if (!deleted) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find supplier with id ${supplier_id}!`,
                     data: null
                 });
             }

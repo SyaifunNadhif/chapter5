@@ -1,47 +1,31 @@
-const {Product, Product_Component, Component} = require('../db/models');
+const {Component} = require('../db/models');
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const products = await Product.findAll({
-                attributes: ['id', 'name', 'quantity'],
-                include: [
-                  {
-                    model: Product_Component,
-                    as: 'product_components',
-                    attributes: ['id'],
-                    include: [
-                      {
-                        model: Component,
-                        as: 'components',
-                        attributes: ['name', 'description']
-                      }
-                    ]
-                  }
-                ]
-            });
-         
+            const components = await Component.findAll();
+
             return res.status(200).json({
                 status: true,
                 message: 'success',
-                data: products
+                data: components
             }) 
 
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
         }
     },
 
     show: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {component_id} = req.params;
 
-            const product = await Product.findOne({where: {id: product_id}});
+            const component = await Component.findOne({where: {id: component_id}});
 
-            if (!product) {
+            if (!component) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find component with id ${component_id}!`,
                     data: null
                 });
             }
@@ -49,7 +33,7 @@ module.exports = {
             return res.status(200).json({
                 status: true,
                 message: 'success',
-                data: product
+                data: component
             });
 
         } catch (error) {
@@ -59,11 +43,11 @@ module.exports = {
 
     store: async (req, res, next) => {
         try {
-            const {name, quantity} = req.body;
+            const {name, description} = req.body;
 
-            const product = await Product.create({
+            const product = await Component.create({
                 name: name,
-                quantity: quantity
+                description: description
             });
 
             console.log(product);
@@ -80,14 +64,14 @@ module.exports = {
 
     update: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {component_id} = req.params;
 
-            const updated = await Product.update(req.body, {where: {id: product_id}});
+            const updated = await Component.update(req.body, {where: {id: component_id}});
 
             if (updated[0] == 0) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find component with id ${component_id}!`,
                     data: null
                 });
             }
@@ -104,14 +88,14 @@ module.exports = {
 
     destroy: async (req, res, next) => {
         try {
-            const {product_id} = req.params;
+            const {component_id} = req.params;
 
-            const deleted = await Product.destroy({where: {id: product_id}});
+            const deleted = await Component.destroy({where: {id: component_id}});
 
             if (!deleted) {
                 return res.status(404).json({
                     status: false,
-                    message: `can't find product with id ${product_id}!`,
+                    message: `can't find component with id ${component_id}!`,
                     data: null
                 });
             }
