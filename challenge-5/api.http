@@ -14,7 +14,7 @@ GET http://localhost:3000/suppliers
 
 
 ### Get detail products
-GET http://localhost:3000/products/2
+GET http://localhost:3000/products/3
 
 ### Get detail components
 GET http://localhost:3000/components/2
@@ -29,7 +29,8 @@ Content-Type: application/json
 
 {
     "name": "Jazz1",
-    "quantity": 200
+    "quantity": 200,
+    "component_id": 2
 }
 
 ### Create component data

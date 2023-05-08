@@ -15,14 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       // relasi many-to-many : Suppliers -> Components
       Component_Supplier.belongsTo(models.Supplier, {
         foreignKey: 'supplier_id',
-        as: 'suppliers',
+        as: 'supplier',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });
 
       Component_Supplier.belongsTo(models.Component, {
         foreignKey: 'component_id',
-        as: 'components',
+        as: 'component',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });

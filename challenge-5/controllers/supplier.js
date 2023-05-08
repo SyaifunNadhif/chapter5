@@ -45,12 +45,21 @@ module.exports = {
         try {
             const {name, address} = req.body;
 
+            if (!name || !address) {
+                return res.status(400).json({
+                  status: false,
+                  message: 'Supplier Name and Address is required!',
+                  data: null
+                });
+              }
+        
+
             const supplier = await Supplier.create({
                 name: name,
                 address: address
             });
 
-            console.log(supplier);
+            
 
             return res.status(201).json({
                 status: true,

@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // relasi many-to-many : Products -> Components
       Product_Component.belongsTo(models.Product, {
         foreignKey: 'product_id',
-        as: 'products',
+        as: 'product',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });
 
       Product_Component.belongsTo(models.Component, {
         foreignKey: 'component_id',
-        as: 'components',
+        as: 'component',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });
