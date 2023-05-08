@@ -541,88 +541,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product_404"
-  /products/product-components/{id}:
-    put:
-      tags:
-        - Product
-      description: Memperbarui data product-components berdasarkan ID yang diberikan.
-      operationId: update-product-component
-      parameters:
-        - name: id
-          in: path
-          description: ID dari product-components yang ingin diperbarui.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                product_id:
-                  type: integer
-                  example: 4
-                component_id:
-                  type: integer
-                  example: 1
-      responses:
-        "200":
-          description: Update Product-Component Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    example: null
-        "404":
-          description: Error not found
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - type: object
-                    properties:
-                      status:
-                        type: boolean
-                        example: false
-                      message:
-                        type: string
-                        example: Product-Component not found!
-                      data:
-                        type: object
-                        example: null
-                  - $ref: "#/components/schemas/Product_404"
-                  - $ref: "#/components/schemas/Component_404"
-              examples:
-                product-component-not-found:
-                  summary: ID product_components not found
-                  value:
-                    status: false
-                    message: Product-Component not found!
-                    data: null
-                product-not-found:
-                  summary: ID Product not found
-                  value:
-                    status: false
-                    message: Product not found!
-                    data: null
-                component-not-found:
-                  summary: ID Component not found
-                  value:
-                    status: false
-                    message: Component not found!
-                    data: null
   /suppliers:
     post:
       tags:
@@ -911,5 +829,4 @@ components:
           example: Supplier not Found!
         data:
           type: object
-          example: null        
-
+          example: null

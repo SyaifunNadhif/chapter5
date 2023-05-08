@@ -17,6 +17,7 @@ router.get('/components/:component_id', component.show); // get detail component
 router.post('/components', component.store); // create new component
 router.put('/components/:component_id', component.update); // update component
 router.delete('/components/:component_id', component.destroy); // delete component
+// router.post('components/component-suppliers/', component.addSupplierComponents);
 
 router.get('/suppliers', supplier.index); // get all supplier
 router.get('/suppliers/:supplier_id', supplier.show); // get detail supplier
